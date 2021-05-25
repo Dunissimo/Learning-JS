@@ -1,6 +1,8 @@
 "use strict";
 
-const numberOfFilms = +prompt("Сколько фильмов вы уже посмотрели?");
+let numberOfFilms;
+
+start();
 
 let personalMovieDB = {
   count: numberOfFilms,
@@ -10,39 +12,55 @@ let personalMovieDB = {
   privat: false,
 };
 
-//let nameOfFirstFilm = prompt("Один из недавно просмотренных фильмов?");
-//let ratingOfFirstFilm = prompt("Оцените его по 10 бальной шкале");
+rememberFilms();
 
-//personalMovieDB.movies[nameOfFirstFilm] = ratingOfFirstFilm;
+writeGenres();
 
-//let nameOfSecondFilm = prompt("Один из недавно просмотренных фильмов?");
-//let ratingOfSecondFilm = prompt("Оцените его по 10 бальной шкале");
+detectLevel();
 
-//personalMovieDB.movies[nameOfSecondFilm] = ratingOfSecondFilm;
+showMyDB(personalMovieDB);
 
-//console.log(personalMovieDB);
-//console.log(personalMovieDB.movies);
+function start() {
+  numberOfFilms = +prompt("Сколько фильмов вы уже посмотрели?");
 
-for (let i = 0; i < personalMovieDB.count; i++) {
+  while (numberOfFilms == '' || numberOfFilms == null || isNaN(numberOfFilms)) {
+    numberOfFilms = +prompt("Сколько фильмов вы уже посмотрели?");
+  }
+}
+function rememberFilms() {
+  for (let i = 0; i < 2; i++) {
     let nameOfFilm = prompt("Один из недавно просмотренных фильмов?");
     let ratingOfFilm = prompt("Оцените его по 10 бальной шкале");
     
-
     if (nameOfFilm != null && ratingOfFilm != null && nameOfFilm != '' && ratingOfFilm != '' && nameOfFilm.length < 50) {
       personalMovieDB.movies[nameOfFilm] = ratingOfFilm;   
     } else {
       console.log("Error");
       i--;
     }
-    if (personalMovieDB.count <= 10) {
-      console.log("Мало");
-    } else if (personalMovieDB.count > 10 && personalMovieDB < 30) {
-      console.log("Норм");
-    } else if (personalMovieDB.count >= 30){
-      console.log("Много");
-    } else {
-      console.log("ERROR");
-    }
     
+  }
 }
-console.log(personalMovieDB);
+function writeGenres() {
+  for (let i = 0; i < 3; i++) {
+    personalMovieDB.genres[i] = prompt(`Ваш любимый жанр. Номер ${i + 1}`);
+  }
+}
+function detectLevel() {
+  if (personalMovieDB.count <= 10) {
+    console.log("Мало");
+  } else if (personalMovieDB.count > 10 && personalMovieDB < 30) {
+    console.log("Норм");
+  } else if (personalMovieDB.count >= 30){
+    console.log("Много");
+  } else {
+    console.log("ERROR");
+  }
+}
+function showMyDB(obj) {
+  if (personalMovieDB.privat == false) {
+    console.log(obj);
+  } else {
+    console.log("База данных приватная");
+  }
+}
