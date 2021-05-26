@@ -38,7 +38,6 @@ function rememberFilms() {
       console.log("Error");
       i--;
     }
-    
   }
 }
 function writeGenres() {
